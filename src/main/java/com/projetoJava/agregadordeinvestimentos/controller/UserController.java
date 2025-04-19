@@ -44,9 +44,11 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
-    @PutMapping
-    public ResponseEntity<Void> updateUserByID(){
+    @PutMapping("/{userId}")
+    public ResponseEntity<Void> updateUserByID(@PathVariable("userId") String userId, @RequestBody UpdateUserDto updateUserDto){
+        userService.updateUserById(userId, updateUserDto);
 
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{userId}")

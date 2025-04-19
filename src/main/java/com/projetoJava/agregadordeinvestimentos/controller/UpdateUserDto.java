@@ -1,4 +1,4 @@
 package com.projetoJava.agregadordeinvestimentos.controller;
 
-public record UpdateUserDto() {
+public record UpdateUserDto(String username, String password) {
 }
