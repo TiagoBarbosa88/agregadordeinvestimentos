@@ -5,15 +5,15 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
-import java.lang.Long;
+import java.util.UUID;
 
 @Entity
 @Table(name = "tb_users")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID userId;
 
     @Column(name = "username")
     private String username;
@@ -33,8 +33,7 @@ public class User {
     public User() {
     }
 
-    public User(Long userId, String username, String email, String password, Instant creationTimestamp, Instant updateTimestamp) {
-        this.userId = userId;
+    public User( String username, String email, String password, Instant creationTimestamp, Instant updateTimestamp) {
         this.username = username;
         this.email = email;
         this.password = password;
@@ -42,11 +41,11 @@ public class User {
         this.updateTimestamp = updateTimestamp;
     }
 
-    public Long getUserId() {
+    public UUID getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(UUID userId) {
         this.userId = userId;
     }
 
@@ -90,3 +89,4 @@ public class User {
         this.updateTimestamp = updateTimestamp;
     }
 }
+

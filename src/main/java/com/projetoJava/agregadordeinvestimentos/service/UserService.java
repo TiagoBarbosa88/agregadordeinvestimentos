@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -17,23 +19,36 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public Long createUSer(CreateUserDto createUserDto){
+    public UUID createUSer(CreateUserDto createUserDto) {
 
         // DTO -> Entity
-       var entity =  new User(
-               null,
+        var entity = new User(
                 createUserDto.username(),
                 createUserDto.email(),
                 createUserDto.password(),
                 Instant.now(),
-                null );
+                null);
 
-       var userSaved = userRepository.save(entity);
+        var userSaved = userRepository.save(entity);
 
-       return userSaved.getUserId();
+        return userSaved.getUserId();
+    }
+
+    public Optional<User> getUserById(String userId) {
+        return userRepository.findById(UUID.fromString(userId));
     }
 
     public List<User> listUsers() {
         return userRepository.findAll();
+    }
+
+    public void deleteById(String userId){
+       var id = UUID.fromString(userId);
+
+       var userExists = userRepository.existsById(id);
+
+       if(userExists){
+           userRepository.deleteById(id);
+       }
     }
 }
